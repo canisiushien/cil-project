@@ -1,0 +1,51 @@
+package cil.bf.activiteApp.service.mapper;
+
+import cil.bf.activiteApp.domain.Exercice;
+import cil.bf.activiteApp.service.dto.ExerciceDTO;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2023-11-15T16:36:39+0000",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
+)
+@Component
+public class ExerciceMapperImpl implements ExerciceMapper {
+
+    @Override
+    public ExerciceDTO toDto(Exercice exercice) {
+        if ( exercice == null ) {
+            return null;
+        }
+
+        ExerciceDTO exerciceDTO = new ExerciceDTO();
+
+        exerciceDTO.setId( exercice.getId() );
+        exerciceDTO.setDateDebut( exercice.getDateDebut() );
+        exerciceDTO.setDateFin( exercice.getDateFin() );
+        exerciceDTO.setAnnee( exercice.getAnnee() );
+        exerciceDTO.setStatut( exercice.getStatut() );
+        exerciceDTO.setActif( exercice.isActif() );
+
+        return exerciceDTO;
+    }
+
+    @Override
+    public Exercice toEntity(ExerciceDTO exerciceDTO) {
+        if ( exerciceDTO == null ) {
+            return null;
+        }
+
+        Exercice exercice = new Exercice();
+
+        exercice.setId( exerciceDTO.getId() );
+        exercice.setDateDebut( exerciceDTO.getDateDebut() );
+        exercice.setDateFin( exerciceDTO.getDateFin() );
+        exercice.setAnnee( exerciceDTO.getAnnee() );
+        exercice.setStatut( exerciceDTO.getStatut() );
+        exercice.setActif( exerciceDTO.isActif() );
+
+        return exercice;
+    }
+}

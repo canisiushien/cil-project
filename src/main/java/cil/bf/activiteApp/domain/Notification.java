@@ -1,0 +1,32 @@
+package cil.bf.activiteApp.domain;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@SQLDelete(sql = "UPDATE notification SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
+public class Notification extends AbstractAuditingEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String message;
+    private String action;
+    private boolean actif = false;
+    private boolean deleted = false;
+    private Long idAction;
+
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id")
+    private Utilisateur utilisateur;
+}

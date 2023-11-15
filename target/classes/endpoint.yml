@@ -1,0 +1,20 @@
+# AUTORISATIONS PAR API
+endpoints:
+  - path: /api/auth/privileges
+    authorities: 
+      - ADMIN
+      - VIEW_PRIVILEGE
+  - path: /api/auth/profiles
+    authorities: 
+      - ADMIN
+      - ADD_PROFILE
+      - VIEW_PROFILE
+      - DELETE_PROFILE
+  - path: /api/auth/utilisateurs
+    authorities: 
+      - ADMIN
+      - ADD_USER
+      - VIEW_USER
+  - path: /api/fonctions
+    authorities: 
+      - ADMIN
