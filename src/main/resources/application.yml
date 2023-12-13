@@ -30,6 +30,8 @@ management:
 
 ---
 spring:
+  main:
+    allow-bean-definition-overriding: true
   jpa:
     properties:
       hibernate:
@@ -52,7 +54,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/activite-cil
     username: postgres
-    password: admin
+    password: some
     hikari:
       poolName: Hikari
       auto-commit: false

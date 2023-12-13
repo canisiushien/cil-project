@@ -4,7 +4,6 @@ import cil.bf.activiteApp.exception.CreateNewElementException;
 import cil.bf.activiteApp.exception.UpdateElementException;
 import cil.bf.activiteApp.service.ActionService;
 import cil.bf.activiteApp.service.dto.ActionDTO;
-import cil.bf.activiteApp.utils.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.net.URI;
@@ -16,8 +15,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by Zak TEGUERA on 15/09/2023.
@@ -68,7 +73,7 @@ public class ActionResource {
     @GetMapping("/list-page")
     public ResponseEntity<List<ActionDTO>> findAll(Pageable pageable) {
         Page<ActionDTO> actions = actionService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), actions);
+        HttpHeaders headers = cil.bf.activiteApp.utils.PaginationUtil.getHeaders(actions);
         return new ResponseEntity<>(actions.getContent(), headers, HttpStatus.OK);
     }
 

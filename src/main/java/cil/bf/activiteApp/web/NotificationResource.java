@@ -4,7 +4,6 @@ import cil.bf.activiteApp.exception.CreateNewElementException;
 import cil.bf.activiteApp.exception.UpdateElementException;
 import cil.bf.activiteApp.service.NotificationService;
 import cil.bf.activiteApp.service.dto.NotificationDTO;
-import cil.bf.activiteApp.utils.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.net.URI;
@@ -16,8 +15,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by Zak TEGUERA on 18/09/2023.
@@ -68,7 +73,7 @@ public class NotificationResource {
     @GetMapping("/list-page")
     public ResponseEntity<List<NotificationDTO>> findAll(Pageable pageable) {
         Page<NotificationDTO> notifications = notificationService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), notifications);
+        HttpHeaders headers = cil.bf.activiteApp.utils.PaginationUtil.getHeaders(notifications);
         return new ResponseEntity<>(notifications.getContent(), headers, HttpStatus.OK);
     }
 
@@ -83,7 +88,7 @@ public class NotificationResource {
     @GetMapping(path = "/user/list/{userId}")
     public ResponseEntity<List<NotificationDTO>> findAllByUser(@PathVariable Long userId, Pageable pageable) {
         Page<NotificationDTO> notifications = notificationService.findAllByUser(userId, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), notifications);
+        HttpHeaders headers = cil.bf.activiteApp.utils.PaginationUtil.getHeaders(notifications);
         return new ResponseEntity<>(notifications.getContent(), headers, HttpStatus.OK);
     }
 
@@ -91,7 +96,7 @@ public class NotificationResource {
     @GetMapping(path = "/user/unread/list/{userId}")
     public ResponseEntity<List<NotificationDTO>> findAllUnreadByUser(@PathVariable Long userId, Pageable pageable) {
         Page<NotificationDTO> notifications = notificationService.findAllUnreadByUser(userId, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), notifications);
+        HttpHeaders headers = cil.bf.activiteApp.utils.PaginationUtil.getHeaders(notifications);
         return new ResponseEntity<>(notifications.getContent(), headers, HttpStatus.OK);
     }
 

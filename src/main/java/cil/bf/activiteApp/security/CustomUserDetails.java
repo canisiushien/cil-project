@@ -5,10 +5,6 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- *
- * @author Canisius <canisiushien@gmail.com>
- */
 public class CustomUserDetails implements UserDetails {
 
     private String username;

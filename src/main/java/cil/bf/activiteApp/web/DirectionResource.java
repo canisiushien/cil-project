@@ -9,7 +9,6 @@ import cil.bf.activiteApp.exception.CreateNewElementException;
 import cil.bf.activiteApp.exception.UpdateElementException;
 import cil.bf.activiteApp.service.DirectionService;
 import cil.bf.activiteApp.service.dto.DirectionDTO;
-import cil.bf.activiteApp.utils.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  *
@@ -97,7 +95,7 @@ public class DirectionResource {
     @GetMapping("/list-page")
     public ResponseEntity<List<DirectionDTO>> findAll(Pageable pageable) {
         Page<DirectionDTO> response = directionService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), response);
+        HttpHeaders headers = cil.bf.activiteApp.utils.PaginationUtil.getHeaders(response);
         return new ResponseEntity<>(response.getContent(), headers, HttpStatus.OK);
     }
 

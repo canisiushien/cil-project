@@ -4,11 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Data
 //@AllArgsConstructor
@@ -17,14 +13,16 @@ import org.hibernate.annotations.Where;
 //@SQLDelete(sql = "UPDATE mission SET deleted = true WHERE id=?")
 //@Where(clause = "deleted = false")
 public class NumeroGeneretor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private Long id;
     private Integer numero;
     private Integer typeNumero;
     private int annee;
 
-    public NumeroGeneretor() {}
+    public NumeroGeneretor() {
+    }
 
     public NumeroGeneretor(Integer numero, Integer typeNumero, int annee) {
         this.numero = numero;

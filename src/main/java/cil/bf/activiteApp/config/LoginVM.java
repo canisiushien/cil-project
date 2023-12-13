@@ -2,22 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cil.bf.activiteApp.security;
+package cil.bf.activiteApp.config;
 
-import java.util.List;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
  *
- * @author Canisius <canisiushien@gmail.com>
+ * @author MARAH
  */
-@Getter
 @Setter
+@Getter
 @ToString
-public class EndpointConfig {
+public class LoginVM implements Serializable {
 
-    private List<Endpoint> endpoints;
+    private String username;
 
+    private String password;
 }

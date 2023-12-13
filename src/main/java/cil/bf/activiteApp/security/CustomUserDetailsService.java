@@ -9,10 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-/**
- *
- * @author Canisius <canisiushien@gmail.com>
- */
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -22,6 +18,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Utilisateur> credential = repository.findOneByLogin(username);
-        return credential.map(CustomUserDetails::new).orElseThrow(() -> new UsernameNotFoundException("Utilisateur " + username + " inexistant."));
+        return credential.map(CustomUserDetails::new).orElseThrow(() -> new UsernameNotFoundException("user not found with name :" + username));
     }
 }

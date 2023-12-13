@@ -5,7 +5,6 @@ import cil.bf.activiteApp.exception.UpdateElementException;
 import cil.bf.activiteApp.service.MailService;
 import cil.bf.activiteApp.service.ReunionService;
 import cil.bf.activiteApp.service.dto.ReunionDTO;
-import cil.bf.activiteApp.utils.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.net.URI;
@@ -16,9 +15,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  * Created by Zak TEGUERA on 15/09/2023.
@@ -75,7 +81,7 @@ public class ReunionResource {
     @GetMapping("/list-page")
     public ResponseEntity<List<ReunionDTO>> findAll(Pageable pageable) {
         Page<ReunionDTO> reunions = reunionService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), reunions);
+        HttpHeaders headers = cil.bf.activiteApp.utils.PaginationUtil.getHeaders(reunions);
         return ResponseEntity.ok().headers(headers).body(reunions.getContent());
     }
 

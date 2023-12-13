@@ -1,27 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cil.bf.activiteApp.web;
 
-import cil.bf.activiteApp.exception.AuthentificationException;
+import cil.bf.activiteApp.security.JwtAuthenticationManager;
 import cil.bf.activiteApp.service.UtilisateurService;
 import cil.bf.activiteApp.service.dto.UtilisateurDTO;
-import cil.bf.activiteApp.web.vm.JwtAuthenticationResponse;
+import cil.bf.activiteApp.utils.JwtUtil;
 import cil.bf.activiteApp.web.vm.LoginVM;
 import cil.bf.activiteApp.web.vm.PasswordModif;
 import cil.bf.activiteApp.web.vm.ResetConnectPaswword;
 import cil.bf.activiteApp.web.vm.ResetPaswword;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,11 +35,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth/utilisateurs")
 public class UtilisateurResource {
 
-    @Autowired
     private UtilisateurService service;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private JwtAuthenticationManager authenticationManager;
+
+    private JwtUtil jwtUtil;
+
+    public UtilisateurResource(UtilisateurService service, JwtAuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+        this.service = service;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+    }
 
     /**
      * creation d'un user
@@ -92,37 +92,11 @@ public class UtilisateurResource {
      * api d'authentification
      *
      * @param authRequest
-     * @param request
      * @return
      */
     @PostMapping("/signin")
-    public ResponseEntity<?> getToken(@RequestBody LoginVM authRequest, HttpServletRequest request) {
-        if (!service.isUserGood(authRequest)) {
-            throw new AuthentificationException("Les informations d'authentification sont erronées!");
-        }
-
-        if (!service.isUserActif(authRequest)) {
-            throw new AuthentificationException("Le compte " + authRequest.getLogin() + " n'est pas activé");
-        }
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
-
-        System.err.println("after AUth ---------------------> " + authenticate);
-
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-
-        System.err.println("rememberMe AUth ---------------------> " + request.getHeader("rememberMe"));
-
-        boolean rememberMe = Boolean.parseBoolean(request.getHeader("rememberMe"));
-
-        if (authenticate.isAuthenticated()) {
-            String jwt = service.generateToken(authRequest.getLogin(), rememberMe);
-            return ResponseEntity.ok()
-                    .header("Authorization", "Bearer " + jwt)
-                    .body(new JwtAuthenticationResponse(jwt));
-        } else {
-            throw new AuthentificationException("Echec d'authentification !");
-        }
+    public String login(@RequestBody LoginVM authRequest) {
+        return jwtUtil.generateToken(authRequest.getLogin(), false);
     }
 
     /**

@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,9 +38,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class InitalDataServiceImpl {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
     @Autowired
     private UtilisateurRepository utilisateurRepository;
 
@@ -108,7 +106,8 @@ public class InitalDataServiceImpl {
             Utilisateur user = new Utilisateur();
             user.setId(1L);
             user.setLogin("admin");
-            user.setPassword(passwordEncoder.encode("admin"));
+//            user.setPassword(passwordEncoder.encode("admin"));
+            user.setPassword("admin");
             user.setNom("admin");
             user.setPrenom("admin");
             user.setMatricule("admin");
