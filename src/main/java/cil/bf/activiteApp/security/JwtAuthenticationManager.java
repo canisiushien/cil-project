@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -23,9 +22,9 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
 
     private JwtUtil jwtUtil;
 
-    private UserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
 
-    public JwtAuthenticationManager(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+    public JwtAuthenticationManager(JwtUtil jwtUtil, CustomUserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
     }

@@ -3,10 +3,12 @@ D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\repository\MandatControl
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\dto\TypeDocumentDTO.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\mapper\TypeIndicateurMapper.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\TypeReunionService.java
+D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\config\AuthenticationResponse.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\web\UtilisateurResource.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\mapper\TypeDocumentMapper.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\MailService.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\security\JwtAuthenticationManager.java
+D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\security\JwtAuthenticationEntryPoint.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\domain\MandatControle.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\config\LoginVM.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\dto\ObjectifStrategiqueDTO.java
@@ -201,6 +203,7 @@ D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\UtilisateurServi
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\domain\TypeIndicateur.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\web\vm\LoginVM.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\exception\EmailAlreadyUsedException.java
+D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\config\ErrorResponse.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\dto\ReunionDTO.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\domain\Profil.java
 D:\dev\cil\cil-project\src\main\java\cil\bf\activiteApp\service\mapper\ReunionMapper.java

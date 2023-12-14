@@ -16,6 +16,7 @@ cil\bf\activiteApp\web\PeriodiciteResource.class
 cil\bf\activiteApp\domain\ObjectifStrategique.class
 cil\bf\activiteApp\service\impl\DocumentServiceImpl.class
 cil\bf\activiteApp\service\TypeIndicateurService.class
+cil\bf\activiteApp\security\JwtAuthenticationEntryPoint.class
 cil\bf\activiteApp\service\mapper\DocumentMapperImpl.class
 cil\bf\activiteApp\service\mapper\UniteMapper.class
 cil\bf\activiteApp\web\UniteResource.class
@@ -167,6 +168,7 @@ cil\bf\activiteApp\service\impl\ReunionServiceImpl.class
 cil\bf\activiteApp\service\mapper\FonctionMapperImpl.class
 cil\bf\activiteApp\security\SecurityConfig.class
 cil\bf\activiteApp\service\mapper\ReunionMapperImpl.class
+cil\bf\activiteApp\config\ErrorResponse.class
 cil\bf\activiteApp\service\impl\MandatControleServiceImpl.class
 cil\bf\activiteApp\repository\ObjectifStrategiqueRepository.class
 cil\bf\activiteApp\security\CustomUserDetails.class
@@ -186,6 +188,7 @@ cil\bf\activiteApp\domain\TypeIndicateur.class
 cil\bf\activiteApp\service\mapper\ObjectifOperationnelMapperImpl.class
 cil\bf\activiteApp\service\TypeReunionService.class
 cil\bf\activiteApp\repository\ActionRepository.class
+cil\bf\activiteApp\config\AuthenticationResponse.class
 cil\bf\activiteApp\domain\AbstractAuditingEntity.class
 cil\bf\activiteApp\repository\DocumentRepository.class
 cil\bf\activiteApp\service\IndicateurService.class

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Mono;
 
 /**
  * Created by Zak TEGUERA on 15/09/2023.
@@ -48,66 +49,67 @@ public class ActiviteResource {
     @ApiResponse(responseCode = "401")
     @ApiResponse(responseCode = "409", description = "Conflict, une donnée similaire existe déjà")
     @ApiResponse(responseCode = "500", description = "Le serveur n'est pas en mesure de traiter la situation qu'il rencontre")
+    @PreAuthorize("hasAuthority('ADD_ACTIVITE')")
     @PostMapping("/new")
-    public ResponseEntity<ActiviteDTO> create(@RequestBody ActiviteDTO request) throws URISyntaxException {
+    public Mono<ResponseEntity<ActiviteDTO>> create(@RequestBody ActiviteDTO request) throws URISyntaxException {
         if (request.getId() != null) {
             throw new CreateNewElementException();
         }
         ActiviteDTO response = activiteService.create(request);
-        return ResponseEntity.created(new URI("/api/activites")).body(response);
+        return Mono.just(ResponseEntity.created(new URI("/api/activites")).body(response));
     }
 
     @Operation(summary = "Modifie une activite", description = "Modifie une activite")
+    @PreAuthorize("hasAuthority('EDIT_ACTIVITE')")
     @PutMapping("/update")
-    public ResponseEntity<ActiviteDTO> update(@RequestBody ActiviteDTO request) throws URISyntaxException {
+    public Mono<ResponseEntity<ActiviteDTO>> update(@RequestBody ActiviteDTO request) throws URISyntaxException {
         if (request.getId() == null) {
             throw new UpdateElementException();
         }
         ActiviteDTO response = activiteService.update(request);
-        return ResponseEntity.ok().body(response);
+        return Mono.just(ResponseEntity.ok().body(response));
     }
 
     @Operation(summary = "Recherche une activite via un ID", description = "Recherche une activite via un ID")
+    @PreAuthorize("hasAuthority('VIEW_ACTIVITE')")
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<ActiviteDTO>> get(@PathVariable(name = "id", required = true) Long id) {
+    public Mono<ResponseEntity<Optional<ActiviteDTO>>> get(@PathVariable(name = "id", required = true) Long id) {
         Optional<ActiviteDTO> activite = activiteService.getById(id);
-        return ResponseEntity.ok().body(activite);
+        return Mono.just(ResponseEntity.ok().body(activite));
     }
 
     @Operation(summary = "Liste toutes les activites par page", description = "Liste toutes les activites par page")
+    @PreAuthorize("hasAuthority('VIEW_ACTIVITE')")
     @GetMapping("/list-page")
-    public ResponseEntity<List<ActiviteDTO>> findAll(Pageable pageable) {
+    public Mono<ResponseEntity<List<ActiviteDTO>>> findAll(Pageable pageable) {
         Page<ActiviteDTO> activites = activiteService.findAll(pageable);
         HttpHeaders headers = cil.bf.activiteApp.utils.PaginationUtil.getHeaders(activites);
-        return ResponseEntity.ok().headers(headers).body(activites.getContent());
+        return Mono.just(ResponseEntity.ok().headers(headers).body(activites.getContent()));
     }
 
     @Operation(summary = "Liste toutes les activites", description = "Liste toutes les activites")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('VIEW_ACTIVITE')")
     @GetMapping("/list")
-    public ResponseEntity<List<ActiviteDTO>> findAll() {
+    public Mono<ResponseEntity<List<ActiviteDTO>>> findAll() {
         List<ActiviteDTO> activites = activiteService.findAll();
-        return ResponseEntity.ok().body(activites);
+        return Mono.just(ResponseEntity.ok().body(activites));
     }
 
     @Operation(summary = "Supprime une activite via un ID", description = "Supprime une activite via un ID")
+    @PreAuthorize("hasAuthority('DELETE_ACTIVITE')")
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public Mono<ResponseEntity<Void>> delete(@PathVariable Long id) {
         activiteService.delete(id);
-        return ResponseEntity
-                .noContent()
-                .build();
+        return Mono.just(ResponseEntity.noContent().build());
     }
 
     @PutMapping("/{id}/cloturer")
-    public ResponseEntity<ActiviteDTO> cloturer(@PathVariable(value = "id") Long id, @RequestParam("file") MultipartFile file) throws URISyntaxException {
-
+    public Mono<ResponseEntity<ActiviteDTO>> cloturer(@PathVariable(value = "id") Long id, @RequestParam("file") MultipartFile file) throws URISyntaxException {
         if (id == null || file.isEmpty()) {
             throw new UpdateElementException();
         }
-
         ActiviteDTO response = activiteService.cloturer(id, file);
-        return ResponseEntity.ok().body(response);
+        return Mono.just(ResponseEntity.ok().body(response));
     }
 
 }

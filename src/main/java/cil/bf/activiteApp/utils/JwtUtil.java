@@ -65,7 +65,7 @@ public class JwtUtil {
                 .flatMap(profil -> profil.getPrivilegeCollection().stream())
                 .collect(Collectors.toSet());
         List<String> privilegeNames = privileges.stream()
-                .map(Privilege::getLibelle)
+                .map(Privilege::getCode)
                 .collect(Collectors.toList());
         claims.put("roles", privilegeNames);
         return createToken(claims, username, rememberMe);
@@ -90,7 +90,6 @@ public class JwtUtil {
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(validity))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
-        System.out.println("********\n Token:" + token + "\n********");
         return token;
     }
 

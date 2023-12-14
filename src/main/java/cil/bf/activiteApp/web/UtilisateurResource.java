@@ -4,6 +4,7 @@
  */
 package cil.bf.activiteApp.web;
 
+import cil.bf.activiteApp.config.AuthenticationResponse;
 import cil.bf.activiteApp.security.JwtAuthenticationManager;
 import cil.bf.activiteApp.service.UtilisateurService;
 import cil.bf.activiteApp.service.dto.UtilisateurDTO;
@@ -95,8 +96,11 @@ public class UtilisateurResource {
      * @return
      */
     @PostMapping("/signin")
-    public String login(@RequestBody LoginVM authRequest) {
-        return jwtUtil.generateToken(authRequest.getLogin(), false);
+    public ResponseEntity<?> login(@RequestBody LoginVM authRequest) {
+        String jwt = jwtUtil.generateToken(authRequest.getLogin(), false);
+        return ResponseEntity.ok()
+                .header("Authorization", "Bearer " + jwt)
+                .body(new AuthenticationResponse(jwt));
     }
 
     /**

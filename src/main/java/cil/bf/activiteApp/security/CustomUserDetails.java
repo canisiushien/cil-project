@@ -1,54 +1,74 @@
 package cil.bf.activiteApp.security;
 
+import cil.bf.activiteApp.domain.Privilege;
 import cil.bf.activiteApp.domain.Utilisateur;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
 
-    private String username;
-    private String password;
-    private boolean actif;
+    private static final long serialVersionUID = 7872682205601592675L;
 
-    public CustomUserDetails(Utilisateur userCredential) {
-        this.username = userCredential.getLogin();
-        this.password = userCredential.getPassword();
-        this.actif = userCredential.isActif();
+    private Utilisateur user;
+
+    public CustomUserDetails(Utilisateur user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<Privilege> roles = new ArrayList<>();
+        user.getProfils().forEach(prof -> {
+            roles.addAll(prof.getPrivilegeCollection());
+        });
+        List<GrantedAuthority> authorities = roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getCode()))
+                .distinct()
+                .collect(Collectors.toList());
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return user.getLogin();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return actif;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return actif;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return actif;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return actif;
+        return user.isActif();
     }
+
+    public Utilisateur getUser() {
+        return user;
+    }
+
+    public void setUser(Utilisateur user) {
+        this.user = user;
+    }
+
 }
